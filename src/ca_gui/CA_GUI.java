@@ -9,14 +9,14 @@ package ca_gui;
  *
  * @author jonpaulcarlo
  */
-public class CA_GUI {
+public class CA_GUI{
 
-    /**
-     * @param args the command line arguments
-     */
+    
     public static void main(String[] args) 
     {
-        System.out.println("Test");
+        new Controller();
+    
+   
     }
     
 }
