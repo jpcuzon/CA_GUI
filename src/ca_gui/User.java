@@ -19,18 +19,18 @@ public class User
         this.em = em;
         this.pw = pw;
     }
-    private String cusRegFName;
-    private String cusRegEmail;
-    private String cusRegPassword;
-    private String cusRegPhone;
+//    private String cusRegFName;
+//    private String cusRegEmail;
+//    private String cusRegPassword;
+//    private String cusRegPhone;
     
-    public User(String cusRegFName, String cusRegEmail, String cusRegPassword, String cusRegPhone)
-    {
-        this.cusRegFName = cusRegFName;
-        this.cusRegEmail = cusRegEmail;
-        this.cusRegPassword = cusRegPassword;
-        this.cusRegPhone = cusRegPhone;
-    }
+//    public User(String cusRegFName, String cusRegEmail, String cusRegPassword, String cusRegPhone)
+//    {
+//        this.cusRegFName = cusRegFName;
+//        this.cusRegEmail = cusRegEmail;
+//        this.cusRegPassword = cusRegPassword;
+//        this.cusRegPhone = cusRegPhone;
+//    }
 
     //for login
     public String getEm() 
@@ -43,25 +43,25 @@ public class User
         return pw;
     }
     
-    //for custormer register
-    public String getCusFN()
-    {
-        return cusRegFName;
-    }
-    
-    public String getCusEm()
-    {
-        return cusRegEmail;
-    }
-    
-    public String getCusPass()
-    {
-        return cusRegPassword;
-    }
-    
-    public String getCusPhone()
-    {
-        return cusRegPhone;
-    }
+//    //for custormer register
+//    public String getCusFN()
+//    {
+//        return cusRegFName;
+//    }
+//    
+//    public String getCusEm()
+//    {
+//        return cusRegEmail;
+//    }
+//    
+//    public String getCusPass()
+//    {
+//        return cusRegPassword;
+//    }
+//    
+//    public String getCusPhone()
+//    {
+//        return cusRegPhone;
+//    }
     
 }

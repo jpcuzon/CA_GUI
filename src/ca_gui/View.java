@@ -160,7 +160,6 @@ public class View extends JFrame
                 userBoxReg.addActionListener(controller);
                 userBoxReg.setActionCommand("hide");
                 //userBox.setSelectedIndex(0);
-                userBoxReg.addActionListener(controller);
                 userSelect.add(userBoxReg);
         
             GridLayout inputBox = new GridLayout(7,1);
@@ -203,8 +202,8 @@ public class View extends JFrame
                 locList = new JComboBox(locations);
                 inputPanel.add(putLoc);
                 inputPanel.add(locList);
-                locList.setVisible(visible);
-                putLoc.setVisible(visible);
+                locList.setVisible(visible); //label for location
+                putLoc.setVisible(visible);  //textfield for location
 
             JButton register = new JButton("Register");
             register.addActionListener(controller); //opens the register window
@@ -237,6 +236,9 @@ public class View extends JFrame
     JFrame cusHome;
     public void custHome()
     {
+//        dbFetch dbfetch = new dbFetch();
+//        String fullname = dbfetch.fetchFullName();
+        
         cusHome = new JFrame("Barberoo | | Dashboard");
         cusHome.setVisible(true);
         cusHome.setSize(1000, 700);
@@ -281,9 +283,35 @@ public class View extends JFrame
         
         JPanel body = new JPanel();
         cusHome.add(body, BorderLayout.CENTER);
-
-            
-        
+            JPanel search = new JPanel();
+            GridLayout searchL = new GridLayout(1,2);
+            search.setLayout(searchL);
+            body.add(search);
+//                JPanel searchBar = new JPanel();
+//                search.add(searchBar);
+                    JTextField searchField = new JTextField();
+                    search.add(searchField);
+                JPanel searchButtonsP = new JPanel();
+                GridLayout searchButtonsL = new GridLayout(1,2);
+                searchButtonsP.setLayout(searchButtonsL);
+                search.add(searchButtonsP);
+                    JPanel comboBoxSearchP = new JPanel();
+                    searchButtonsP.add(comboBoxSearchP);
+                        String[] searchSelect = {"Select", "Name", "Location"};
+                        JComboBox comboBoxSearch = new JComboBox(searchSelect);
+                        comboBoxSearchP.add(comboBoxSearch);
+                    JPanel searchButtonP = new JPanel();
+                    searchButtonsP.add(searchButtonP);
+                        JButton searchButton = new JButton("Search");
+                        searchButtonP.add(searchButton);
+                    
+            JPanel bookingLabelP = new JPanel();
+            BorderLayout mainBody = new BorderLayout();
+            bookingLabelP.setLayout(mainBody);
+            body.add(bookingLabelP);
+                JLabel bookingLabel = new JLabel("MY BOOKINGS");
+                bookingLabelP.add(bookingLabel, BorderLayout.PAGE_START);
+                        
         
 //        //main body
 //        JPanel body = new JPanel();
