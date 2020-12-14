@@ -16,6 +16,7 @@ public class BarberReg
     private String barberRegPassword;
     private String barberRegPhone;
     private String barberRegLocation;
+    private String searchBarber;
     
     public BarberReg(String barberRegFName, String barberRegEmail, String barberRegPhone, String barberRegPassword, String barberRegLocation)
     {
@@ -26,6 +27,10 @@ public class BarberReg
         this.barberRegLocation = barberRegLocation;
     }
 
+    public BarberReg(String searchBarber)
+    {
+        this.searchBarber = searchBarber;
+    }
     
     //for custormer register
     public String getBarFN()
@@ -51,6 +56,11 @@ public class BarberReg
     public String getBarLoc()
     {
         return barberRegLocation;
+    }
+    
+    public String getSearchBarber()
+    {
+        return searchBarber;
     }
     
 }

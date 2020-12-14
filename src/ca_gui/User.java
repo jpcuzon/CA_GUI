@@ -19,18 +19,6 @@ public class User
         this.em = em;
         this.pw = pw;
     }
-//    private String cusRegFName;
-//    private String cusRegEmail;
-//    private String cusRegPassword;
-//    private String cusRegPhone;
-    
-//    public User(String cusRegFName, String cusRegEmail, String cusRegPassword, String cusRegPhone)
-//    {
-//        this.cusRegFName = cusRegFName;
-//        this.cusRegEmail = cusRegEmail;
-//        this.cusRegPassword = cusRegPassword;
-//        this.cusRegPhone = cusRegPhone;
-//    }
 
     //for login
     public String getEm() 

@@ -6,17 +6,22 @@
 package ca_gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import static java.awt.Component.LEFT_ALIGNMENT;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.WindowEvent;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 /**
@@ -68,9 +73,7 @@ public class View extends JFrame
         login.add(body, BorderLayout.CENTER);
 
             //for the panel that contains the input field
-            GridLayout inputBox = new GridLayout(2,2);
-            JPanel inputPanel = new JPanel();
-            inputPanel.setLayout(inputBox);
+            JPanel inputPanel = new JPanel(new GridLayout(2,2));
             body.add(inputPanel);
 
                 JLabel putEmail = new JLabel("Email: ");
@@ -96,11 +99,9 @@ public class View extends JFrame
                 logButtons.add(submit);
 
             //panel that contains the registration page
-            GridLayout regInsL = new GridLayout(2,1);
-            JPanel regIns = new JPanel();
-            regIns.setBorder(new EmptyBorder(30,30,30,30));
-            regIns.setLayout(regInsL);
+            JPanel regIns = new JPanel(new GridLayout(2,1));
             login.add(regIns, BorderLayout.PAGE_END);
+            regIns.setBorder(new EmptyBorder(30,30,30,30));
 
                 JLabel needAcc = new JLabel("Need an account?");//change
                 regIns.add(needAcc);
@@ -118,6 +119,8 @@ public class View extends JFrame
         
     }
     
+    JLabel testLabel;
+    
     String uType;
     boolean visible;
     JComboBox userBoxReg;
@@ -129,6 +132,8 @@ public class View extends JFrame
     JTextField pNumber;
     JTextField email;
     JTextField password;
+    JTextField confirmPass;
+    
     public void Register()
     {
         Register = new JFrame("Barberoo | | Register");
@@ -139,19 +144,17 @@ public class View extends JFrame
         Register.setLayout(cusRegisterL);
         
         JPanel logoPanel = new JPanel();
-        JLabel logoLabel = new JLabel("Barberoo");
-        logoLabel.setFont(new Font("Courier", Font.BOLD,40)); //sets the font size
-        logoLabel.setBorder(new EmptyBorder(25,0,25,0)); //adds a padding around the label
-        logoPanel.add(logoLabel);
         Register.add(logoPanel, BorderLayout.PAGE_START);
+            JLabel logoLabel = new JLabel("Barberoo");
+            logoLabel.setFont(new Font("Courier", Font.BOLD,40)); //sets the font size
+            logoLabel.setBorder(new EmptyBorder(25,0,25,0)); //adds a padding around the label
+            logoPanel.add(logoLabel);
         
         //main body
         JPanel body = new JPanel();
         Register.add(body, BorderLayout.CENTER);
-        
-        //GridLayout uSelectL = new GridLayout(2,1);
+       
             JPanel userSelect = new JPanel();
-            //userSelect.setLayout(uSelectL);
             body.add(userSelect);
                 JLabel regAs = new JLabel("Register As:");
                 userSelect.add(regAs);
@@ -162,9 +165,7 @@ public class View extends JFrame
                 //userBox.setSelectedIndex(0);
                 userSelect.add(userBoxReg);
         
-            GridLayout inputBox = new GridLayout(7,1);
-            JPanel inputPanel = new JPanel();
-            inputPanel.setLayout(inputBox);
+            JPanel inputPanel = new JPanel(new GridLayout(8,1,5,5));
             body.add(inputPanel);
                 //first name
                 JLabel putfName = new JLabel("First Name: ");
@@ -194,11 +195,11 @@ public class View extends JFrame
                 inputPanel.add(password);
                 //confirm password
                 JLabel putPass2 = new JLabel("Confirm Password: ");
-                JTextField password2 = new JTextField(20);
+                confirmPass = new JTextField(20);
                 inputPanel.add(putPass2);
-                inputPanel.add(password2);
+                inputPanel.add(confirmPass);
                 putLoc = new JLabel("Location: ");
-                String[] locations = {"Dublin 7","Dublin 8"};
+                String[] locations = {"Dublin 1","Dublin 2","Kildare, Kildare","Newbridge, Kildare","Cork","Belfast","Dublin 7","Dublin 8"};
                 locList = new JComboBox(locations);
                 inputPanel.add(putLoc);
                 inputPanel.add(locList);
@@ -206,16 +207,14 @@ public class View extends JFrame
                 putLoc.setVisible(visible);  //textfield for location
 
             JButton register = new JButton("Register");
+            body.add(register);
             register.addActionListener(controller); //opens the register window
             register.setActionCommand("register");
-            body.add(register);
         
         //panel that contains the buttons to go back to log-in page
-            GridLayout regInsL = new GridLayout(2,1);
-            JPanel regIns = new JPanel();
-                regIns.setBorder(new EmptyBorder(30,30,30,30));
-                regIns.setLayout(regInsL);
-                Register.add(regIns, BorderLayout.PAGE_END);
+            JPanel regIns = new JPanel(new GridLayout(2,1));
+            Register.add(regIns, BorderLayout.PAGE_END);
+            regIns.setBorder(new EmptyBorder(30,30,30,30));
 
                 JLabel haveAcc = new JLabel("Already have an account?");//change
                 regIns.add(haveAcc);
@@ -234,6 +233,9 @@ public class View extends JFrame
     }
     
     JFrame cusHome;
+    String complaint;
+    JTextField searchField;
+    JComboBox comboBoxSearch;
     public void custHome()
     {
 //        dbFetch dbfetch = new dbFetch();
@@ -241,39 +243,34 @@ public class View extends JFrame
         
         cusHome = new JFrame("Barberoo | | Dashboard");
         cusHome.setVisible(true);
-        cusHome.setSize(1000, 700);
+        cusHome.setSize(600, 700);
         
         BorderLayout cusHomeL = new BorderLayout();
         cusHome.setLayout(cusHomeL);
         
-        //GridLayout headerL = new GridLayout(2,1);
         JPanel header = new JPanel();
-        //header.setLayout(headerL);
         cusHome.add(header, BorderLayout.PAGE_START);
             //for the header
-            GridLayout subHeaderL = new GridLayout(1,2);
-            JPanel subHeader = new JPanel();
-            subHeader.setLayout(subHeaderL);
+            JPanel subHeader = new JPanel(new GridLayout(1,2));
             header.add(subHeader);
+            
                 JPanel logo = new JPanel();
                 subHeader.add(logo);
                     JLabel logoLabel = new JLabel("Barberoo");
                     logo.add(logoLabel);
-                    logoLabel.setFont(new Font("Courier", Font.BOLD,20)); //sets the font size
-                    logoLabel.setBorder(new EmptyBorder(25,0,35,0)); //adds a padding around the label
+                    logoLabel.setFont(new Font("Courier", Font.BOLD,40)); //sets the font size
+                    logoLabel.setBorder(new EmptyBorder(25,50,35,0)); //adds a padding around the label
                 JPanel rightAlign = new JPanel();
-                FlowLayout rightAlignL = new FlowLayout();
-                rightAlign.setLayout(rightAlignL);
-                rightAlignL.setAlignment(FlowLayout.RIGHT);
                 subHeader.add(rightAlign);
-                    GridLayout rightHeaderL = new GridLayout(2,1);
-                    JPanel rightHeader = new JPanel();
-                    rightHeader.setLayout(rightHeaderL);
-                    rightAlign.add(rightHeader);
+                    JPanel rightAlignHeader = new JPanel(new FlowLayout(FlowLayout.TRAILING));
+                    rightAlign.add(rightAlignHeader);
+                    JPanel rightHeader = new JPanel(new GridLayout(2,1));
+                    rightAlignHeader.add(rightHeader);
                             JPanel welcomeMessage = new JPanel();//note: allign to the right
                             rightHeader.add(welcomeMessage);
-                                JLabel welcome = new JLabel("Welcome!");
+                                JLabel welcome = new JLabel("Welcome, Jon Paul!");
                                 welcomeMessage.add(welcome);
+                                welcome.setFont(new Font("Courier", Font.BOLD,15));
                             JPanel logoutButton = new JPanel(); //note: allign to the right
                             rightHeader.add(logoutButton);
                                 JButton logout = new JButton("Logout");
@@ -281,80 +278,112 @@ public class View extends JFrame
                                 logout.addActionListener(controller);
                                 logout.setActionCommand("logoutCus");            
         
-        JPanel body = new JPanel();
+        JPanel body = new JPanel(new BorderLayout());
         cusHome.add(body, BorderLayout.CENTER);
             JPanel search = new JPanel();
-            GridLayout searchL = new GridLayout(1,2);
-            search.setLayout(searchL);
-            body.add(search);
-//                JPanel searchBar = new JPanel();
-//                search.add(searchBar);
-                    JTextField searchField = new JTextField();
-                    search.add(searchField);
-                JPanel searchButtonsP = new JPanel();
-                GridLayout searchButtonsL = new GridLayout(1,2);
-                searchButtonsP.setLayout(searchButtonsL);
-                search.add(searchButtonsP);
-                    JPanel comboBoxSearchP = new JPanel();
-                    searchButtonsP.add(comboBoxSearchP);
-                        String[] searchSelect = {"Select", "Name", "Location"};
-                        JComboBox comboBoxSearch = new JComboBox(searchSelect);
-                        comboBoxSearchP.add(comboBoxSearch);
-                    JPanel searchButtonP = new JPanel();
-                    searchButtonsP.add(searchButtonP);
-                        JButton searchButton = new JButton("Search");
-                        searchButtonP.add(searchButton);
+            body.add(search, BorderLayout.PAGE_START);
+                searchField = new JTextField("", 28);
+                search.add(searchField);
+                JPanel comboBoxSearchP = new JPanel();
+                search.add(comboBoxSearchP);
+                    String[] searchSelect = {"Name", "Location"};
+                    comboBoxSearch = new JComboBox(searchSelect);
+                    comboBoxSearchP.add(comboBoxSearch);
+                JPanel searchButtonP = new JPanel();
+                search.add(searchButtonP);
+                    JButton searchButton = new JButton("Search");
+                    searchButtonP.add(searchButton);
+                    searchButton.addActionListener(controller);
+                    searchButton.setActionCommand("searchBarber");
                     
-            JPanel bookingLabelP = new JPanel();
-            BorderLayout mainBody = new BorderLayout();
-            bookingLabelP.setLayout(mainBody);
-            body.add(bookingLabelP);
-                JLabel bookingLabel = new JLabel("MY BOOKINGS");
-                bookingLabelP.add(bookingLabel, BorderLayout.PAGE_START);
-                        
-        
-//        //main body
-//        JPanel body = new JPanel();
-//        body.setBorder(new EmptyBorder(20,0,0,0));
-//        this.add(body, BorderLayout.CENTER);
-//        //for the panel that contains the input field
-//        GridLayout inputBox = new GridLayout(3,2);
-//        JPanel inputPanel = new JPanel();
-//        inputPanel.setLayout(inputBox);
-//        body.add(inputPanel);
-//        
-//        JLabel putEmail = new JLabel("Email: ");
-//        JTextField email = new JTextField(20);
-//        inputPanel.add(putEmail);
-//        inputPanel.add(email);
-//        
-//        JLabel putPass = new JLabel("Password: ");
-//        JTextField password = new JTextField(20);
-//        inputPanel.add(putPass);
-//        inputPanel.add(password);
-//        //for the panel that contains the drop-down button
-//        JPanel logButtons = new JPanel();
-//        body.add(logButtons);
-//        String[] userType =  {"Select User Type","Customer", "Barber"};
-//        userBox = new JComboBox(userType);
-//        userBox.addActionListener(this);
-//        userBox.setActionCommand("comboBox");
-//        userBox.setAlignmentX(LEFT_ALIGNMENT);
-//        logButtons.add(userBox);
-//        JButton submit = new JButton("Log-in");
-//        logButtons.add(submit);
-//        
-//        //panel that contains the registration page
-//        GridLayout regInsL = new GridLayout(2,1);
-//        JPanel regIns = new JPanel();
-//        regIns.setBorder(new EmptyBorder(30,30,30,30));
-//        regIns.setLayout(regInsL);
-//        this.add(regIns, BorderLayout.PAGE_END);
-//        
-//        JLabel needAcc = new JLabel("Need an account?");//change
-//        regIns.add(needAcc);
-//        JButton goRegister = new JButton("Register");
-//        regIns.add(goRegister);
+            JPanel dashboardP = new JPanel(new BorderLayout());
+            body.add(dashboardP, BorderLayout.CENTER);
+                JPanel labelP = new JPanel(new FlowLayout(FlowLayout.LEADING));
+                dashboardP.add(labelP, BorderLayout.PAGE_START);
+                    JPanel bookingLabelRight = new JPanel();
+                    labelP.add(bookingLabelRight);
+                        JLabel bookingLabel = new JLabel("MY BOOKINGS");
+                        bookingLabelRight.add(bookingLabel);
+                        bookingLabel.setBorder(new EmptyBorder(0,33,0,0));
+                        bookingLabel.setFont(new Font("Courier", Font.BOLD,20));
+            
+//                JPanel bookingAreaP = new JPanel(new GridLayout(2,1));//temporary grid layout
+//                dashboardP.add(bookingAreaP, BorderLayout.CENTER);
+                    JPanel bookingContainer1 = new JPanel();
+                    dashboardP.add(bookingContainer1);
+                    
+                        JPanel booking1P = new JPanel(new GridLayout(3,2,5,5));
+                        bookingContainer1.add(booking1P);
+                        booking1P.setBorder(BorderFactory.createDashedBorder(null,2,3,3,true)); //creates a dashed line border with the parameter (paint, thickness,length,spacing, and rounded corner)
+//                        booking1P.setVisible(true);
+                            JPanel label1P = new JPanel(new GridLayout(1,1));
+                            booking1P.add(label1P);
+                            label1P.setBorder(new EmptyBorder(10,15,0,100));
+                                JLabel time1 = new JLabel("11:30, Monday");
+                                label1P.add(time1);
+                            JPanel button1P = new JPanel(new GridLayout(1,1));
+                            booking1P.add(button1P);
+                            button1P.setBorder(new EmptyBorder(10,100,0,15));
+                                JButton cancel1 = new JButton("Cancel");
+                                button1P.add(cancel1);
+                            JPanel label2P = new JPanel(new GridLayout(1,1));
+                            booking1P.add(label2P);
+                            label2P.setBorder(new EmptyBorder(0,15,0,100));
+                                JLabel service1 = new JLabel("Haircut, Confirmed");
+                                label2P.add(service1);
+                            JPanel button2P = new JPanel(new GridLayout(1,1));
+                            booking1P.add(button2P);  
+                            button2P.setBorder(new EmptyBorder(0,100,0,15));
+                                JButton placeComplaint1 = new JButton("Place Complaint");
+                                button2P.add(placeComplaint1);
+                                placeComplaint1.addActionListener(controller);
+                                placeComplaint1.setActionCommand("complaint");
+                            JPanel label3P = new JPanel(new GridLayout(1,1));
+                            booking1P.add(label3P);
+                            label3P.setBorder(new EmptyBorder(0,15,10,100));
+                                JLabel barberName1 = new JLabel("Tony Stark, Dublin 7");
+                                label3P.add(barberName1);
+                            JPanel button3P = new JPanel(new GridLayout(1,1));
+                            booking1P.add(button3P);  
+                            button3P.setBorder(new EmptyBorder(0,100,10,15));
+                                JButton viewBarber1 = new JButton("View Barber");
+                                button3P.add(viewBarber1);
+                                
+                        JPanel booking2P = new JPanel(new GridLayout(3,2,5,5));
+                        bookingContainer1.add(booking2P);
+                        booking2P.setBorder(BorderFactory.createDashedBorder(null,2,3,3,true)); //creates a dashed line border with the parameter (paint, thickness,length,spacing, and rounded corner)
+                            JPanel label1Pb = new JPanel(new GridLayout(1,1));
+                            booking2P.add(label1Pb);
+                            label1Pb.setBorder(new EmptyBorder(10,15,0,100));
+                                JLabel time1b = new JLabel("2:00, Tuesday");
+                                label1Pb.add(time1b);
+                            JPanel button1Pb = new JPanel(new GridLayout(1,1));
+                            booking2P.add(button1Pb);
+                            button1Pb.setBorder(new EmptyBorder(10,100,0,15));
+                                JButton cancel1b = new JButton("Cancel");
+                                button1Pb.add(cancel1b);    
+                            JPanel label2Pb = new JPanel(new GridLayout(1,1));
+                            booking2P.add(label2Pb);
+                            label2Pb.setBorder(new EmptyBorder(0,15,0,100));
+                                JLabel service1b = new JLabel("Shave, Pending");
+                                label2Pb.add(service1b);
+                            JPanel button2Pb = new JPanel(new GridLayout(1,1));
+                            booking2P.add(button2Pb);  
+                            button2Pb.setBorder(new EmptyBorder(0,100,0,15));
+                                JButton placeComplaint1b = new JButton("Place Complaint");
+                                button2Pb.add(placeComplaint1b);    
+                            JPanel label3Pb = new JPanel(new GridLayout(1,1));
+                            booking2P.add(label3Pb);
+                            label3Pb.setBorder(new EmptyBorder(0,15,10,100));
+                                JLabel barberName1b = new JLabel("Bruce Banner, Dublin 7");
+                                label3Pb.add(barberName1b);
+                            JPanel button3Pb = new JPanel(new GridLayout(1,1));
+                            booking2P.add(button3Pb);  
+                            button3Pb.setBorder(new EmptyBorder(0,100,10,15));
+                                JButton viewBarber1b = new JButton("View Barber");
+                                button3Pb.add(viewBarber1b);                
+
+
 
         
         cusHome.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);    
@@ -363,5 +392,5 @@ public class View extends JFrame
 
     }
     
-    
+ 
 }
