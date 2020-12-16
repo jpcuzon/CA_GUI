@@ -5,6 +5,7 @@
  */
 package ca_gui;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -18,7 +19,11 @@ public class Controller implements ActionListener
 {
     View view;
     Model model;
-    
+    String searchBarber;
+    String[][] searchBarberResult;
+    int countSearch;
+    int custNumber;
+    int barNumber;
     public Controller()
     {
         this.view = new View(this);
@@ -89,13 +94,14 @@ public class Controller implements ActionListener
                 user = new User(em, pw);
 
                 result = model.loginCustomer(user);
-
+                custNumber = model.getcusNumber(user);
                 if(result)
                 {
                     resultMessage = "Welcome in";
                     view.login.dispatchEvent(new WindowEvent(view.login, WindowEvent.WINDOW_CLOSING));//disposes the other frame when this frame opens
                     view.custHome();
                     System.out.println(resultMessage);
+                    System.out.println("Welcome customer number: " + custNumber);
                 }
                 else //pops up whenever the user forgot to pick a user type
                 {
@@ -112,11 +118,13 @@ public class Controller implements ActionListener
                     user = new User(em, pw);
 
                     result = model.loginBarber(user);
+                    barNumber = model.getbarNumber(user);
 
                     if(result)
                     {
                         resultMessage = "Welcome in";
                         System.out.println(resultMessage);
+                        System.out.println("Welcome barber number: "+ barNumber);
                     }
                     else//pops up whenever the user forgot to pick a user type
                     {
@@ -147,27 +155,32 @@ public class Controller implements ActionListener
                     String phone = view.pNumber.getText();
                     String password = view.password.getText();
                     String confirmPass = view.confirmPass.getText();
-                    
-                    if(password.equals(confirmPass))
+                    if(!phone.matches("[a-zA-Z]*")&&(phone.length()==10))
                     {
-                        CustomerReg cusReg = new CustomerReg(fullName, email, phone, password);
+                        if(email.contains("@")&&email.contains("."))
+                        {
+                            if(password.equals(confirmPass))
+                            {
+                                CustomerReg cusReg = new CustomerReg(fullName, email, phone, password);
 
-                       // if(v)
-                            model.CusRegister(cusReg);
+                                    model.CusRegister(cusReg);
 
-                            String query = "INSERT INTO customers (full_name,email_address, phone_number, password) "
-                                    + "VALUES ('"+fullName+"','"+email+"','"+phone+"','"+password+"');";
+                                    String query = "INSERT INTO customers (full_name,email_address, phone_number, password) "
+                                            + "VALUES ('"+fullName+"','"+email+"','"+phone+"','"+password+"');";
 
-                            JOptionPane.showMessageDialog(view.Register, "Go back to the login page", "Registraition Complete!", 1);
-                            view.Register.dispatchEvent(new WindowEvent(view.Register, WindowEvent.WINDOW_CLOSING));//disposes the other frame when this frame opens
-                            view.login();
-                            System.out.println(query);
-                    }
-                    else
-                    {
-                        System.out.println(password +" "+confirmPass);
-                        JOptionPane.showMessageDialog(view.Register, "Password doesn't match!", "Error!", 0);
-                    }
+                                    JOptionPane.showMessageDialog(view.Register, "Go back to the login page", "Registraition Complete!", 1);
+                                    view.Register.dispatchEvent(new WindowEvent(view.Register, WindowEvent.WINDOW_CLOSING));//disposes the other frame when this frame opens
+                                    view.login();
+                                    System.out.println(query);
+                            }
+                            else
+                            {
+                                System.out.println(password +" "+confirmPass);
+                                JOptionPane.showMessageDialog(view.Register, "Password doesn't match!", "Error!", 0);
+                            }
+                        }else{JOptionPane.showMessageDialog(view.Register, "Invalid email!", "Error!", 0);}
+                        
+                    }else{JOptionPane.showMessageDialog(view.Register, "Invalid Phone Number", "Error", 0);}
                 }
                 else if(view.userBoxReg.getSelectedItem()=="Barber") //barber registration
                 {
@@ -177,26 +190,33 @@ public class Controller implements ActionListener
                     String password = view.password.getText();
                     String confirmPass = view.confirmPass.getText();
                     String location = view.locList.getSelectedItem().toString();
-
-                    if(password.equals(confirmPass))
+                    if(!phone.matches("[a-zA-Z]*")&&(phone.length()==10))
                     {
-                        BarberReg barReg = new BarberReg(fullName, email, phone, password, location);
+                        if(email.contains("@")&&email.contains("."))
+                        {
 
-                        model.BarRegister(barReg);
+                            if(password.equals(confirmPass))
+                            {
+                                BarberReg barReg = new BarberReg(fullName, email, phone, password, location);
 
-                        String query = "INSERT INTO barbers (full_name,email_address, phone_number, password, location) "
-                                + "VALUES ('"+fullName+"','"+email+"','"+phone+"','"+password+"','"+location+"');";
+                                model.BarRegister(barReg);
 
-                        JOptionPane.showMessageDialog(view.Register, "Go back to the login page", "Registraition Complete!", 1);
-                        view.Register.dispatchEvent(new WindowEvent(view.Register, WindowEvent.WINDOW_CLOSING));//disposes the other frame when this frame opens
-                        view.login();
-                        System.out.println(query);
-                    }
-                    else
-                    {
-                        System.out.println(password +" "+confirmPass);
-                        JOptionPane.showMessageDialog(view.Register, "Password doesn't match!", "Error!", 0);
-                    }
+                                String query = "INSERT INTO barbers (full_name,email_address, phone_number, password, location) "
+                                        + "VALUES ('"+fullName+"','"+email+"','"+phone+"','"+password+"','"+location+"');";
+
+                                JOptionPane.showMessageDialog(view.Register, "Go back to the login page", "Registraition Complete!", 1);
+                                view.Register.dispatchEvent(new WindowEvent(view.Register, WindowEvent.WINDOW_CLOSING));//disposes the other frame when this frame opens
+                                view.login();
+                                System.out.println(query);
+                            }
+                            else
+                            {
+                                System.out.println(password +" "+confirmPass);
+                                JOptionPane.showMessageDialog(view.Register, "Password doesn't match!", "Error!", 0);
+                            }
+                        }else{JOptionPane.showMessageDialog(view.Register, "Invalid email!", "Error!", 0);}
+                        
+                    }else{JOptionPane.showMessageDialog(view.Register, "Invalid Phone Number", "Error", 0);}
 
                 }
                 else
@@ -212,34 +232,81 @@ public class Controller implements ActionListener
             
         }
         
-        if(e.getActionCommand().equals("complaint"))
-        {
-//            view.complaint = JOptionPane.showInputDialog(view.cusHome, "Place Complaint Here:");
-            view.complaint = JOptionPane.showInputDialog(view.cusHome, "What's your complaint about this barber?", "Place a complaint", JOptionPane.QUESTION_MESSAGE);
-            JOptionPane.showMessageDialog(view.cusHome, view.complaint, "Test",2);
-            System.out.println(view.complaint);
-            
-        }
         
         if(e.getActionCommand().equals("searchBarber"))
         {
+            searchBarber = view.searchField.getText();
+            BarberReg search = new BarberReg(searchBarber);
+//            int countSearch;
             if(view.comboBoxSearch.getSelectedItem().equals("Name"))
             {
-                String searchBarber = view.searchField.getText();
-
-                BarberReg search = new BarberReg(searchBarber);
-                model.searchBarber(search);
+                countSearch = model.countSearchB(search);
+                if(countSearch==0)
+                {
+                    view.sp.add(view.noResults());
+                }
+                else
+                {
+                    searchBarberResult = model.searchBarber(search);
+                    view.dashboardP.removeAll();
+                    view.sp.add(view.searchResult());
+                    System.out.println(countSearch);
+    //                searchBarberResult = model.searchBarber(search);
+                }
                 
             }
             else
             {
-                String searchLocation = view.searchField.getText();
-
-                BarberReg search = new BarberReg(searchLocation);
-                model.searchLocation(search);
+                countSearch = model.countSearchL(search);
+                if(countSearch==0)
+                {
+                    view.sp.add(view.noResults());
+                }
+                else
+                {
+                    searchBarberResult = model.searchLocation(search);
+                    view.dashboardP.removeAll();
+                    view.sp.add(view.searchResult());
+                    System.out.println(countSearch);
+                }
+                
             }
-            
-            
+
+        }
+        
+        if(e.getActionCommand().equals("bookAppointment"))
+        {
+            JOptionPane.showMessageDialog(view.cusHome, view.makeBooking(),"Book an Appointmet", JOptionPane.PLAIN_MESSAGE);
+            System.out.println();
+//            view.dashboardSearchP.dispatchEvent(new WindowEvent(view.Register, WindowEvent.WINDOW_CLOSING));
+//            view.cusHome.revalidate();
+//            view.cusHome.repaint();
+        }
+        
+        for(int i = 0;i<countSearch;i++)
+        {
+            if(e.getActionCommand().equals("complaint"+i))
+            {   
+                JOptionPane.showMessageDialog(view.cusHome, view.complaintPopUp(),"Is there a problem?", JOptionPane.PLAIN_MESSAGE);
+                String complaint = view.complaintBox.getText();
+                System.out.println(view.complaintBox.getText());
+                int custNumberComplaint = custNumber;
+                String barberName = searchBarberResult[i][0];
+                Complaints complaints = new Complaints(complaint,custNumberComplaint,barberName);
+                
+                model.placeComplaint(complaints);
+                
+                
+                JOptionPane.showMessageDialog(view.cusHome, "Submission Successful", "Place Complaint", 1);
+                
+
+            }
+        }
+        if(e.getActionCommand().equals("homeButton"))
+        {
+            System.out.println("Nice");
+            view.sp.add(view.dashboardPanel());
+
         }
         
     }

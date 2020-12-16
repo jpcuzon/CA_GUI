@@ -32,6 +32,7 @@ public class BarberReg
         this.searchBarber = searchBarber;
     }
     
+    
     //for custormer register
     public String getBarFN()
     {
