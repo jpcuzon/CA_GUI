@@ -23,7 +23,12 @@ public class CustomerReg
         this.cusRegPassword = cusRegPassword;
         this.cusRegPhone = cusRegPhone;
     }
-
+    
+    public CustomerReg(String cusRegEmail, String cusRegPassword)
+    {
+        this.cusRegEmail = cusRegEmail;
+        this.cusRegPassword = cusRegPassword;
+    }
     
     //for custormer register
     public String getCusFN()

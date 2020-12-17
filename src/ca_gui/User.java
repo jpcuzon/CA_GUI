@@ -31,25 +31,4 @@ public class User
         return pw;
     }
     
-//    //for custormer register
-//    public String getCusFN()
-//    {
-//        return cusRegFName;
-//    }
-//    
-//    public String getCusEm()
-//    {
-//        return cusRegEmail;
-//    }
-//    
-//    public String getCusPass()
-//    {
-//        return cusRegPassword;
-//    }
-//    
-//    public String getCusPhone()
-//    {
-//        return cusRegPhone;
-//    }
-    
 }

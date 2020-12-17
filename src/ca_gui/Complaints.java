@@ -14,12 +14,18 @@ public class Complaints
     private String complaints;
     private String barberName;
     private int custNumber;
+    private int barberNumber;
     
     public Complaints(String complaints,int custNumber, String barberName)
     {
         this.complaints= complaints;
         this.custNumber = custNumber;
         this.barberName = barberName;
+    }
+    
+    public Complaints(int barberNumber)
+    {
+        this.barberNumber = barberNumber;
     }
     
     public String complaints()
@@ -33,5 +39,9 @@ public class Complaints
     public String barberName()
     {
         return barberName;
+    }
+    public int barberNumber()
+    {
+        return barberNumber;
     }
 }

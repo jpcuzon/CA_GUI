@@ -32,6 +32,12 @@ public class BarberReg
         this.searchBarber = searchBarber;
     }
     
+    public BarberReg(String barberRegEmail, String barberRegPassword)
+    {
+        this.barberRegEmail = barberRegEmail;
+        this.barberRegPassword = barberRegPassword;
+    }
+    
     
     //for custormer register
     public String getBarFN()
